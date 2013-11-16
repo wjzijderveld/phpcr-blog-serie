@@ -1,0 +1,6 @@
+{
+    "require": {
+        "jackalope/jackalope-doctrine-dbal": "~1.0",
+        "symfony/yaml": "~2.3"
+    }
+}

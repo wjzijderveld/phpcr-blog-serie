@@ -1,0 +1,14 @@
+jackalope:
+  # DoctrineDBAL with MySQL
+  transport: jackalope-doctrine-dbal
+  dbal:
+    driver: pdo_mysql
+    hostname: 127.0.0.1
+    username: jackalope
+    password: jackalope
+    database: jackalope_tutorial
+
+phpcr:
+  username: admin
+  password: admin
+  workspace: default
