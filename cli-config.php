@@ -49,7 +49,15 @@ try {
             throw new \RuntimeException('$repository should be an instance of \PHPCR\RepositoryInterface');
         }
 
-        $credentials = new \PHPCR\SimpleCredentials($config['phpcr']['username'], $config['phpcr']['password']);
+        // We don't need to login if we only request the list or the help
+        if (!isset($argv[1]) || !in_array($argv[1], array('list', 'help'))) {
+            $credentials = new \PHPCR\SimpleCredentials($config['phpcr']['username'], $config['phpcr']['password']);
+            $session = $repository->login($credentials, $config['phpcr']['workspace']);
+
+            $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+                'session' => new \PHPCR\Util\Console\Helper\PhpcrHelper($session)
+            ));
+        }
     }
 } catch (\Exception $e) {
     echo "\033[31m" . 'Error while bootstrapping Jackalope:' . "\033[0m" . PHP_EOL;
