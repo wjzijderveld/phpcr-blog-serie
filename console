@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/cli-config.php';
+
+$helperSet = isset($helperSet) ? $helperSet : new \Symfony\Component\Console\Helper\HelperSet();
+
+$app = new \Symfony\Component\Console\Application('PHPCR tutorial');
+$app->setCatchExceptions(true);
+$app->setHelperSet($helperSet);
+
+// Part 2 commands
+$app->add(new \Wjzijderveld\Command\GenerateDataCommand());
+
+$app->run();

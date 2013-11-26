@@ -1,6 +1,12 @@
 {
     "require": {
         "jackalope/jackalope-doctrine-dbal": "~1.0",
-        "symfony/yaml": "~2.3"
+        "symfony/yaml": "~2.3",
+        "fzaninotto/faker": "~1.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
     }
 }
