@@ -54,7 +54,9 @@ class GenerateDataCommand extends Command
             }
         }
 
+        // Initialize Faker
         $faker = \Faker\Factory::create();
+        // Create 10 random nodes
         while (count($rootNode->getNodes()) < 10) {
 
             try {
@@ -67,13 +69,17 @@ class GenerateDataCommand extends Command
             }
         }
 
+        // Add a dummy node
         $dummyNode = $rootNode->addNode('dummy');
         $dummyNode->setProperty('createdAt', new \DateTime('now'));
         $dummyNode->setProperty('title', $faker->lastName);
+        $dummyNode->setProperty('floatProperty', 3.1415);
 
         $session->save();
 
-        $this->output->writeln(sprintf('Generated %d nodes under /', count($rootNode)));
+        $this->output->writeln(sprintf('Generated %d nodes under /', count($rootNode->getNodes())));
+
+        // Loop over the nodes
         /** @var $childNode NodeInterface */
         foreach ($rootNode as $childNode) {
             $name = $childNode->getName();
@@ -94,14 +100,26 @@ class GenerateDataCommand extends Command
             $this->output->writeln(sprintf('   - Body: <info>%s</info>', $body ?: '<comment>null</comment>'));
         }
 
+        // Convert property values
+        $this->output->writeln('');
+        var_dump($dummyNode->getProperty('floatProperty')->getString());
+        var_dump($dummyNode->getProperty('floatProperty')->getLong());
+        var_dump($dummyNode->getProperty('floatProperty')->getBoolean());
+        var_dump($dummyNode->getProperty('floatProperty')->getBinary());
+        var_dump($dummyNode->getPropertyValue('floatProperty', \PHPCR\PropertyType::STRING));
+        $this->output->writeln('');
+
+        // Find node by path
         $dummyNode = $session->getNode('/dummy');
         $this->output->writeln('Node <info>/dummy</info>');
         $this->output->writeln(sprintf('Dummy node title: <info>%s</info>', $dummyNode->getProperty('title')->getValue()));
 
+        // Find childNode by name
         $dummyNode = $rootNode->getNode('dummy');
         $this->output->writeln('Node <info>dummy</info> from <info>/</info>');
         $this->output->writeln(sprintf('Dummy node title: <info>%s</info>', $dummyNode->getProperty('title')->getValue()));
 
+        // Find multiple nodes by path
         $nodePaths = array('/', '/dummy');
         $nodes = $session->getNodes($nodePaths);
         $this->output->writeln('');
@@ -112,6 +130,23 @@ class GenerateDataCommand extends Command
             $this->output->writeln(sprintf('- Path: <info>%s</info>', $name));
             $this->output->writeln(sprintf('  - Title: <info>%s</info>', $title ?: '<comment>null</comment>'));
         }
+
+        // Create properties with different types
+        $stream = fopen('php://memory', 'w+');
+        fwrite($stream, 'Some string saved as binary content');
+        rewind($stream);
+
+        $typeExamplesNode = $rootNode->addNode('typeExamples');
+        $typeExamplesNode->setProperty('integer', 42);
+        $typeExamplesNode->setProperty('float', 3.1415);
+        $typeExamplesNode->setProperty('boolean', false);
+        $typeExamplesNode->setProperty('binary', $stream);
+
+        $cNodes = $rootNode->getNodes('e*');
+        $this->output->writeln('');
+        $this->output->writeln(sprintf('Found %d nodes starting with e', count($cNodes)));
+
+        $session->save();
 
         return 0;
     }
