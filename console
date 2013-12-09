@@ -11,5 +11,7 @@ $app->setHelperSet($helperSet);
 
 // Part 2 commands
 $app->add(new \Wjzijderveld\Command\GenerateDataCommand());
+// Part 3 commands
+$app->add(new \Wjzijderveld\Command\QOMCommand());
 
 $app->run();
