@@ -32,6 +32,15 @@ class QOMCommand extends Command
         /** @var QueryObjectModelFactoryInterface $qomFactory */
         $qomFactory = $session->getWorkspace()->getQueryManager()->getQOMFactory();
 
+        /*
+        // Example of a query with the QueryBuilder
+        $queryBuilder = new \PHPCR\Util\QOM\QueryBuilder($qomFactory);
+        $queryBuilder
+            ->from($qomFactory->selector('file', 'nt:file'))
+            ->where($qomFactory->descendantNode('file', '/documents'))
+            ->execute();
+        */
+
         $source = $qomFactory->selector('news', 'nt:unstructured');
         $titleColumn = $qomFactory->column('news', 'title', 'title');
         $qom = $qomFactory->createQuery(
