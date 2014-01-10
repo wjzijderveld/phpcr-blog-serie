@@ -13,5 +13,11 @@ $app->setHelperSet($helperSet);
 $app->add(new \Wjzijderveld\Command\GenerateDataCommand());
 // Part 3 commands
 $app->add(new \Wjzijderveld\Command\QOMCommand());
+// Part 4 commands
+$app->addCommands(array(
+    new \Wjzijderveld\Command\InfoCommand(),
+    new \PHPCR\Util\Console\Command\NodeTypeListCommand(),
+    new \Wjzijderveld\Command\MixinsCommand(),
+));
 
 $app->run();
