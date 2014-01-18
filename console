@@ -18,6 +18,7 @@ $app->addCommands(array(
     new \Wjzijderveld\Command\InfoCommand(),
     new \PHPCR\Util\Console\Command\NodeTypeListCommand(),
     new \Wjzijderveld\Command\MixinsCommand(),
+    new \Wjzijderveld\Command\CreateNodeTypeCommand(),
 ));
 
 $app->run();

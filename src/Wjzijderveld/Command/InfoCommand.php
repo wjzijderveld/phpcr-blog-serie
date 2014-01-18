@@ -12,6 +12,7 @@ use PHPCR\NodeType\PropertyDefinitionInterface;
 use PHPCR\PropertyType;
 use PHPCR\SessionInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,6 +22,7 @@ class InfoCommand extends Command
     {
         $this->setName('tutorial:info')
             ->setDescription('Returns some basic info about your repository')
+            ->addArgument('nodeType', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'Specify to get information for only the given nodeType', array())
         ;
     }
 
@@ -31,7 +33,18 @@ class InfoCommand extends Command
 
         $ntm = $session->getWorkspace()->getNodeTypeManager();
 
-        $nodeTypes = $ntm->getAllNodeTypes();
+        $nodeTypeNames = $input->getArgument('nodeType');
+        if (array() !== $nodeTypeNames) {
+            foreach ($nodeTypeNames as $nodeType) {
+                if (!$ntm->hasNodeType($nodeType)) {
+                    $output->writeln(sprintf('<error>Given nodeType "%s" doesn\'t exists.</error>', $nodeType));
+                    return 1;
+                }
+                $nodeTypes[$nodeType] = $ntm->getNodeType($nodeType);
+            }
+        } else {
+            $nodeTypes = $ntm->getAllNodeTypes();
+        }
 
         /** @var NodeTypeInterface $nodeType */
         foreach ($nodeTypes as $name => $nodeType) {

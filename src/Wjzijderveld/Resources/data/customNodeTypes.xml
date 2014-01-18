@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeTypes>
+    <nodeType name="acme:product" isMixin="false" isAbstract="false" isQueryable="true" hasOrderableChildNodes="true">
+        <supertypes>
+            <supertype>nt:base</supertype>
+            <supertype>mix:title</supertype>
+            <supertype>mix:referenceable</supertype>
+        </supertypes>
+        <propertyDefinition
+                name="acme:rrpPrice"
+                requiredType="decimal"
+                declaringNodeType="acme:product"
+                autoCreated="true"
+                fullTextSearchable="false"
+                mandatory="true"
+                multiple="false"
+                onParentVersion="COPY"
+                protected="false"
+                queryOrderable="true">
+            <valueConstraints />
+        </propertyDefinition>
+        <propertyDefinition
+                name="acme:media"
+                requiredType="Reference"
+                declaringNodeType="acme:product"
+                autoCreated="false"
+                fullTextSearchable="false"
+                mandatory="false"
+                multiple="true"
+                onParentVersion="COPY"
+                protected="false"
+                queryOrderable="false">
+            <valueConstraints>
+                <valueConstraint>nt:resource</valueConstraint>
+            </valueConstraints>
+        </propertyDefinition>
+    </nodeType>
+</nodeTypes>
