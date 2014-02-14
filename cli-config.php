@@ -30,7 +30,10 @@ try {
 
             break;
         case 'jackalope-jackrabbit':
-            throw new \Exception('Jackrabbit bootstrap has not yet been defined');
+            $factory = new \Jackalope\RepositoryFactoryJackrabbit();
+            $repository = $factory->getRepository(array(
+                'jackalope.jackrabbit_uri' => $config['jackalope']['jackrabbit']['url'],
+            ));
             break;
         default:
             throw new \RuntimeException(sprintf('Invalid transport "%s" given', $config['jackalope']['transport']));
@@ -39,7 +42,7 @@ try {
     // Special case for DoctrineDBAL, when running the init command, it needs the db connection, but a phpcr session is
     // impossible if the db is not yet initialized. So we create a special helperSet just for that command
 
-    if (isset($argv[1]) && 'jackalope:init:dbal' === $argv[1]) {
+    if (isset($argv[1]) && 'jackalope:init:dbal' === $argv[1] && isset($dbConnection)) {
         $helperSet = new HelperSet(array(
             'connection' => new \Jackalope\Tools\Console\Helper\DoctrineDbalHelper($dbConnection),
         ));

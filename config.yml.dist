@@ -1,12 +1,15 @@
 jackalope:
-  # DoctrineDBAL with MySQL
-  transport: jackalope-doctrine-dbal
+  transport: jackalope-jackrabbit
   dbal:
     driver: pdo_mysql
     hostname: 127.0.0.1
     username: jackalope
     password: jackalope
     database: jackalope_tutorial
+  jackrabbit:
+    username: admin
+    hostname: admin
+    url: http://localhost:8080/server
 
 phpcr:
   username: admin

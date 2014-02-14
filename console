@@ -19,6 +19,9 @@ $app->addCommands(array(
     new \PHPCR\Util\Console\Command\NodeTypeListCommand(),
     new \Wjzijderveld\Command\MixinsCommand(),
     new \Wjzijderveld\Command\CreateNodeTypeCommand(),
+    new \PHPCR\Util\Console\Command\WorkspaceExportCommand(),
+    new \PHPCR\Util\Console\Command\WorkspaceImportCommand(),
+    new \PHPCR\Util\Console\Command\WorkspaceQueryCommand(),
 ));
 
 $app->run();

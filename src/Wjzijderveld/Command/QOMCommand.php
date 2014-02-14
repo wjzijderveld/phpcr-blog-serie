@@ -113,7 +113,9 @@ class QOMCommand extends Command
 
         if ($rootNode->hasNode('queryExamples')) {
             $rootNode->getNode('queryExamples')->remove();
+            $this->getSession()->save();
         }
+
         $this->getSession()->importXML('/', __DIR__ . '/../Resources/data/fixtures.xml', ImportUUIDBehaviorInterface::IMPORT_UUID_CREATE_NEW);
 
         /*

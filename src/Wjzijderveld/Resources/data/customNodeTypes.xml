@@ -17,6 +17,9 @@
                 onParentVersion="COPY"
                 protected="false"
                 queryOrderable="true">
+            <defaultValues>
+                <defaultValue>0.00</defaultValue>
+            </defaultValues>
             <valueConstraints />
         </propertyDefinition>
         <propertyDefinition
