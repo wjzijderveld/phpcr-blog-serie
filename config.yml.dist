@@ -7,8 +7,6 @@ jackalope:
     password: jackalope
     database: jackalope_tutorial
   jackrabbit:
-    username: admin
-    hostname: admin
     url: http://localhost:8080/server
 
 phpcr:
